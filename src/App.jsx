@@ -176,6 +176,108 @@ function App() {
           </div>
         </article>
       </section>
+
+      <section className="m-4 md:m-8 bg-gray-800 text-gray-100 rounded-3xl">
+        <div className="flex flex-wrap flex-col p-6">
+          <h2 className="text-5xl font-bold text-center mb-3">
+            Selecciona una API
+          </h2>
+          <ul className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row gap-y-2">
+            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-sm font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-white bg-emerald-600"
+                }
+              >
+                Star Wars
+              </a>
+            </li>
+            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-sm font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-emerald-600 bg-gray-700"
+                }
+              >
+                Pokemon
+              </a>
+            </li>
+            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-sm font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-emerald-600 bg-gray-700"
+                }
+              >
+                Rick and Morty
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="flex place-content-center">
+          <div className="mb-5 relative overflow-hidden inline-block">
+            <label className="text-xs text-emerald-500 font-semibold uppercase">
+              Limite de resultados
+            </label>
+            <div>
+              <input
+                type="number"
+                className="form-input max-w-md border-gray-300 bg-white bg-opacity-80 placeholder-gray-400 text-black"
+              />
+              <span
+                className={`absolute bottom-0 left-0 h-2 bg-emerald-500 transition-all duration-300 ease-in transform ${
+                  1 === 1 ? "w-7/12" : "w-0"
+                }`}
+              />
+              <span
+                className={`absolute bottom-0 right-0 h-2 bg-emerald-500 transition-all duration-300 ease-in transform ${
+                  1 === 1 ? "w-7/12" : "w-0"
+                }`}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mx-auto w-5/6 h-4 bg-gradient-to-r from-emerald-500/0 via-emerald-500 to-emerald-500/0"></div>
+
+        <div className="flex flex-wrap place-content-center p-6 justify-evenly gap-y-2">
+          <a className="group relative inline-block overflow-hidden border-2 rounded-full border-fuchsia-600 px-8 py-3 focus:outline-none focus:ring">
+            <span className="absolute inset-y-0 left-0 w-0 bg-fuchsia-600 transition-all group-hover:w-full group-active:bg-fuchsia-500"></span>
+            <span className="relative text-md font-medium text-fuchsia-600 transition-colors group-hover:text-white">
+              Peliculas
+            </span>
+          </a>
+          <a className="group relative inline-block overflow-hidden border-2 rounded-full border-fuchsia-600 px-8 py-3 focus:outline-none focus:ring">
+            <span className="absolute inset-y-0 left-0 w-0 bg-fuchsia-600 transition-all group-hover:w-full group-active:bg-fuchsia-500"></span>
+            <span className="relative text-md font-medium text-fuchsia-600 transition-colors group-hover:text-white">
+              Personajes
+            </span>
+          </a>
+          <a className="group relative inline-block overflow-hidden border-2 rounded-full border-fuchsia-600 px-8 py-3 focus:outline-none focus:ring">
+            <span className="absolute inset-y-0 left-0 w-0 bg-fuchsia-600 transition-all group-hover:w-full group-active:bg-fuchsia-500"></span>
+            <span className="relative text-md font-medium text-fuchsia-600 transition-colors group-hover:text-white">
+              Planetas
+            </span>
+          </a>
+          <a className="group relative inline-block overflow-hidden border-2 rounded-full border-fuchsia-600 px-8 py-3 focus:outline-none focus:ring">
+            <span className="absolute inset-y-0 left-0 w-0 bg-fuchsia-600 transition-all group-hover:w-full group-active:bg-fuchsia-500"></span>
+            <span className="relative text-md font-medium text-fuchsia-600 transition-colors group-hover:text-white">
+              Especies
+            </span>
+          </a>
+          <a className="group relative inline-block overflow-hidden border-2 rounded-full border-fuchsia-600 px-8 py-3 focus:outline-none focus:ring">
+            <span className="absolute inset-y-0 left-0 w-0 bg-fuchsia-600 transition-all group-hover:w-full group-active:bg-fuchsia-500"></span>
+            <span className="relative text-md font-medium text-fuchsia-600 transition-colors group-hover:text-white">
+              Naves
+            </span>
+          </a>
+          <a className="group relative inline-block overflow-hidden border-2 rounded-full border-fuchsia-600 px-8 py-3 focus:outline-none focus:ring">
+            <span className="absolute inset-y-0 left-0 w-0 bg-fuchsia-600 transition-all group-hover:w-full group-active:bg-fuchsia-500"></span>
+            <span className="relative text-md font-medium text-fuchsia-600 transition-colors group-hover:text-white">
+              Vehiculos
+            </span>
+          </a>
+        </div>
+      </section>
     </div>
   );
 }
