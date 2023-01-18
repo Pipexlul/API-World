@@ -1,6 +1,12 @@
+import { useState } from "react";
+
 import APIChooser from "./APIHandlerLogic/APIChooser";
+import Separator from "./Separator";
+import ShinyInput from "./ShinyInput";
 
 const APIHandler = () => {
+  const [limitedResults, setLimitedResults] = useState(0);
+
   return (
     <section className="m-4 rounded-3xl bg-gray-800 pb-6 text-gray-100 last:mb-0 md:m-8">
       <div className="flex flex-col flex-wrap p-6">
@@ -10,31 +16,25 @@ const APIHandler = () => {
         <APIChooser />
       </div>
 
+      {/*General Filters section*/}
       <div className="flex place-content-center items-center">
         <div className="relative mb-5 overflow-hidden">
-          <label className="text-xs font-semibold uppercase text-emerald-500">
-            Limite de resultados
-          </label>
-          <div>
-            <input
-              type="number"
-              className="form-input max-w-md border-gray-300 bg-white bg-opacity-80 text-black placeholder-gray-400"
-            />
-            <span
-              className={`absolute bottom-0 left-0 h-2 transform bg-emerald-500 transition-all duration-300 ease-in ${
-                1 === 1 ? "w-7/12" : "w-0"
-              }`}
-            />
-            <span
-              className={`absolute bottom-0 right-0 h-2 transform bg-emerald-500 transition-all duration-300 ease-in ${
-                1 === 1 ? "w-7/12" : "w-0"
-              }`}
-            />
-          </div>
+          <ShinyInput
+            label="Limite de resultados"
+            type="number"
+            bgColor="bg-emerald-500"
+            labelColor="text-emerald-500"
+            changeHandler={setLimitedResults}
+            value={limitedResults}
+          />
         </div>
       </div>
 
-      <div className="mx-auto h-4 w-5/6 bg-gradient-to-r from-emerald-500/0 via-emerald-500 to-emerald-500/0"></div>
+      <Separator
+        fromColor="from-emerald-500/0"
+        midColor="via-emerald-500"
+        toColor="to-emerald-500/0"
+      />
 
       <div className="mb-4 flex flex-wrap place-content-center justify-evenly gap-y-2 p-6">
         <a className="group relative inline-block overflow-hidden rounded-full border-2 border-fuchsia-600 px-8 py-3 focus:outline-none focus:ring">
