@@ -8,12 +8,12 @@ const Header = () => {
           API
           <span className="text-violet-400">World</span>
         </h1>
-        <p className="px-8 mt-8 mb-12 text-lg">
+        <p className="mt-8 mb-12 px-8 text-lg">
           Bienvenido a APIWorld, donde podras llamar distintas APIs con
           tematicas variadas. Desde Pokemon, hasta Star Wars, pasando por Rick
           and Morty.
         </p>
-        <p className="px-8 mb-4 text-lg">¡Todo desde un sólo lugar!</p>
+        <p className="mb-4 px-8 text-lg">¡Todo desde un sólo lugar!</p>
         <div className="flex flex-wrap justify-center">
           <Button
             text="Empezar"

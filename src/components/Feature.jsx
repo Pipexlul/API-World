@@ -14,7 +14,7 @@ const Feature = ({
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        className={`w-8 h-8 ${iconColor}`}
+        className={`h-8 w-8 ${iconColor}`}
       >
         <path d={iconPath ? iconPath : defaultPath}></path>
       </svg>

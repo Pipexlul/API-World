@@ -1,14 +1,24 @@
+import { useEffect } from "react";
+import HowToUseDefault from "./HowToUseDefault";
+import HowToUseDisplayText from "./HowToUseDisplayText";
+
 const HowToUse = () => {
+  let infoData = {};
+
   return (
-    <section className="m-4 md:m-8 bg-gray-800 text-gray-100 rounded-3xl flex flex-col sm:flex-row">
-      <aside className="w-full p-6 sm:w-60 bg-emerald-900">
+    <section className="m-4 flex flex-col rounded-3xl bg-gray-800 text-gray-100 sm:flex-row md:m-8">
+      <aside className="w-full bg-emerald-900 p-6 sm:w-60">
         <nav className="space-y-8 text-sm">
           <div className="space-y-2">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-gray-400">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">
               General
             </h2>
             <div className="flex flex-col space-y-1">
-              <a rel="noopener noreferrer" href="#">
+              <a
+                rel="noopener noreferrer"
+                href="#"
+                onClick={(e) => e.preventDefault()}
+              >
                 Seleccion
               </a>
               <a rel="noopener noreferrer" href="#">
@@ -20,7 +30,7 @@ const HowToUse = () => {
             </div>
           </div>
           <div className="space-y-2">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-gray-400">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">
               Star Wars
             </h2>
             <div className="flex flex-col space-y-1">
@@ -30,7 +40,7 @@ const HowToUse = () => {
             </div>
           </div>
           <div className="space-y-2">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-gray-400">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">
               Pokemon
             </h2>
             <div className="flex flex-col space-y-1">
@@ -40,7 +50,7 @@ const HowToUse = () => {
             </div>
           </div>
           <div className="space-y-2">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-gray-400">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">
               Rick and Morty
             </h2>
             <div className="flex flex-col space-y-1">
@@ -52,12 +62,7 @@ const HowToUse = () => {
         </nav>
       </aside>
       <article className="w-full p-6 text-center">
-        <div className="flex flex-col justify-center h-full gap-y-8">
-          <h2 className="text-5xl font-bold">¿Cómo usar APIWorld?</h2>
-          <p className="text-lg">
-            Haz click en la sección sobre la que deseas saber más
-          </p>
-        </div>
+        {true ? <HowToUseDisplayText /> : <HowToUseDefault />}
       </article>
     </section>
   );

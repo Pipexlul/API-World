@@ -2,8 +2,8 @@ import Feature from "./Feature";
 
 const FeaturesList = ({ features }) => {
   return (
-    <section className="m-4 md:m-8 bg-gray-800 text-gray-100 rounded-3xl">
-      <div className="container mx-auto p-4 my-6 space-y-2 text-center">
+    <section className="m-4 rounded-3xl bg-gray-800 text-gray-100 md:m-8">
+      <div className="container mx-auto my-6 space-y-2 p-4 text-center">
         <h2 className="text-5xl font-bold">APIs soportadas</h2>
         <p className="text-gray-400">Ocupa tu favorita</p>
       </div>
