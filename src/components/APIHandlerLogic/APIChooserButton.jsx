@@ -9,7 +9,7 @@ const APIChooserButton = ({ apiName, selected, clickHandler, idx }) => {
         }`}
         onClick={(e) => {
           e.preventDefault();
-          clickHandler(idx);
+          clickHandler({ idx, apiName });
         }}
         href="#"
       >

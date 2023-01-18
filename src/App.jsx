@@ -67,8 +67,15 @@ function App() {
 
   useEffect(() => {
     const initialData = initialAppState();
+    const validMain = {};
 
-    initialData.main = apiData;
+    for (const [key, value] of Object.entries(apiData)) {
+      if (value.enabled) {
+        validMain[key] = value;
+      }
+    }
+
+    initialData.main = validMain;
 
     const mainValues = Object.values(initialData.main);
 
@@ -78,7 +85,7 @@ function App() {
         .replace(".js", "");
 
       const mainBlock = mainValues.find((item) => item.internal === fileName);
-      if (mainBlock && mainBlock.enabled) {
+      if (mainBlock) {
         initialData.features.push(value);
       }
     });
@@ -88,14 +95,20 @@ function App() {
 
       const mainBlock = mainValues.find((item) => item.internal === fileName);
 
-      if (mainBlock && mainBlock.enabled) {
-        if (!initialData.apidata[fileName]) {
-          initialData.apidata[fileName] = [];
+      if (mainBlock) {
+        const finalApiValues = [];
+
+        if (!initialData.apidata[value.apiName]) {
+          initialData.apidata[value.apiName] = finalApiValues;
         }
 
-        value.forEach((item) => {
+        if (!initialData.apidata[fileName]) {
+          initialData.apidata[fileName] = finalApiValues;
+        }
+
+        value.endpoints.forEach((item) => {
           if (item.enabled) {
-            initialData.apidata[fileName].push(item);
+            finalApiValues.push(item);
           }
         });
       }
@@ -108,11 +121,7 @@ function App() {
 
       if (fileName === "General") {
         initialData.howtouse.push(value);
-      } else if (
-        mainBlock &&
-        mainBlock.enabled &&
-        initialData.apidata[fileName].length > 0
-      ) {
+      } else if (mainBlock && initialData.apidata[fileName].length > 0) {
         const dataCopy = structuredClone(value);
 
         initialData.apidata[fileName].forEach((item) => {
@@ -166,7 +175,7 @@ function App() {
         <Header />
         <FeaturesList features={apiState.features} />
         <HowToUse howToUseData={apiState.howtouse} />
-        <APIHandler />
+        <APIHandler mainData={apiState.main} apiData={apiState.apidata} />
       </div>
     </APIContext.Provider>
   ) : null;
