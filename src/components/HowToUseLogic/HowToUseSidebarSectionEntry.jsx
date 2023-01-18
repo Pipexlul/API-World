@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { HowToUseContext } from "../contexts/appContexts";
+import { HowToUseContext } from "../../contexts/appContexts";
 
 const HowToUseSidebarSectionEntry = ({ subLabel, sectionRoute }) => {
   const { setSelectedRoute } = useContext(HowToUseContext);

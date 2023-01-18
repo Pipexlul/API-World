@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 import { HowToUseContext } from "../contexts/appContexts";
 
-import HowToUseDefault from "./HowToUseDefault";
-import HowToUseDisplayText from "./HowToUseDisplayText";
-import HowToUseSidebarSection from "./HowToUseSidebarSection";
+import HowToUseDefault from "./HowToUseLogic/HowToUseDefault";
+import HowToUseDisplayText from "./HowToUseLogic/HowToUseDisplayText";
+import HowToUseSidebarSection from "./HowToUseLogic/HowToUseSidebarSection";
 
 const HowToUse = ({ howToUseData }) => {
   const [selectedEntryText, setSelectedEntryText] = useState([]);
