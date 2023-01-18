@@ -1,7 +1,13 @@
+import HowToUseDisplayTextInfo from "./HowToUseDisplayTextInfo";
 import HowToUseRoute from "./HowToUseRoute";
 
-const HowToUseDisplayText = () => {
-  return <HowToUseRoute routesList={["APIWorld", "General", "Seleccion"]} />;
+const HowToUseDisplayText = ({ routes, entryText }) => {
+  return (
+    <>
+      <HowToUseRoute routesList={routes} />
+      <HowToUseDisplayTextInfo infoToShow={entryText} />
+    </>
+  );
 };
 
 export default HowToUseDisplayText;
