@@ -1,5 +1,7 @@
 export const data = {
   apiName: "Star Wars",
+  resultsField: "results",
+  continueField: "next",
   endpoints: [
     {
       name: "Peliculas",

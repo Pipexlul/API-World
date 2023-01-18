@@ -98,12 +98,18 @@ function App() {
       if (mainBlock) {
         const finalApiValues = [];
 
+        const finalApiData = {
+          resultsField: value.resultsField,
+          continueField: value.continueField,
+          apiValues: finalApiValues,
+        };
+
         if (!initialData.apidata[value.apiName]) {
-          initialData.apidata[value.apiName] = finalApiValues;
+          initialData.apidata[value.apiName] = finalApiData;
         }
 
         if (!initialData.apidata[fileName]) {
-          initialData.apidata[fileName] = finalApiValues;
+          initialData.apidata[fileName] = finalApiData;
         }
 
         value.endpoints.forEach((item) => {
@@ -121,10 +127,13 @@ function App() {
 
       if (fileName === "General") {
         initialData.howtouse.push(value);
-      } else if (mainBlock && initialData.apidata[fileName].length > 0) {
+      } else if (
+        mainBlock &&
+        initialData.apidata[fileName].apiValues.length > 0
+      ) {
         const dataCopy = structuredClone(value);
 
-        initialData.apidata[fileName].forEach((item) => {
+        initialData.apidata[fileName].apiValues.forEach((item) => {
           if (item.enabled) {
             const fieldsObjects = item.fields.map((field) => {
               return {

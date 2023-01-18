@@ -10,7 +10,12 @@ import Separator from "./Separator";
 
 const APIHandler = ({ mainData, apiData }) => {
   const [limitedResults, setLimitedResults] = useState(0);
-  const [selectedAPI, setSelectedAPI] = useState({ idx: -1, apiName: "" });
+  const [selectedAPI, setSelectedAPI] = useState({
+    idx: -1,
+    apiName: "",
+    apiResultsField: "",
+    apiContinueField: "",
+  });
   const [canClick, setCanClick] = useState(true);
   const [endpoints, setEndpoints] = useState([]);
   const [endpointURL, setEndpointURL] = useState("");
@@ -21,7 +26,7 @@ const APIHandler = ({ mainData, apiData }) => {
       const apiBlock = apiData[selectedAPI.apiName];
 
       if (apiBlock) {
-        setEndpoints(apiBlock);
+        setEndpoints(apiBlock.apiValues);
       }
     }
   }, [selectedAPI.idx]);
@@ -38,21 +43,41 @@ const APIHandler = ({ mainData, apiData }) => {
 
   useEffect(() => {
     if (endpointURL) {
-      console.log("Fetching", endpointURL);
-      const fetchResults = async () => {
-        try {
-          const response = await fetch(endpointURL);
-          console.log(response);
-          const data = await response.json();
-          console.log(data);
+      const urlCopy = endpointURL;
 
-          setResults(data.results);
-        } catch (error) {
-          console.error(error);
+      const fetchResults = async (url) => {
+        let finalResults = [];
+
+        while (url) {
+          console.log("Fetching", url);
+          try {
+            const response = await fetch(url);
+            if (!response.ok) {
+              throw new Error(
+                `HTTP error! status: ${response.status} when fetching ${url}`
+              );
+            }
+            const data = await response.json();
+            console.log(data);
+
+            finalResults = finalResults.concat(
+              data[selectedAPI.apiResultsField]
+            );
+
+            if (selectedAPI.apiContinueField) {
+              url = data[selectedAPI.apiContinueField];
+            } else {
+              url = null;
+            }
+          } catch (error) {
+            throw error;
+          }
         }
+
+        return finalResults;
       };
 
-      fetchResults();
+      fetchResults(urlCopy).then(setResults).catch(console.error);
     }
   }, [endpointURL]);
 
@@ -68,7 +93,8 @@ const APIHandler = ({ mainData, apiData }) => {
           Selecciona una API
         </h2>
         <APIChooser
-          apiData={Object.values(mainData)}
+          mainData={Object.values(mainData)}
+          apiData={apiData}
           selectedAPI={selectedAPI}
           setSelectedAPI={setSelectedAPI}
         />

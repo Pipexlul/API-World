@@ -1,4 +1,10 @@
-const APIChooserButton = ({ apiName, selected, clickHandler, idx }) => {
+const APIChooserButton = ({
+  apiName,
+  apiData,
+  selected,
+  clickHandler,
+  idx,
+}) => {
   return (
     <li className="-mb-px mr-2 flex-auto text-center last:mr-0">
       <a
@@ -9,7 +15,14 @@ const APIChooserButton = ({ apiName, selected, clickHandler, idx }) => {
         }`}
         onClick={(e) => {
           e.preventDefault();
-          clickHandler({ idx, apiName });
+
+          const { resultsField, continueField } = apiData[apiName];
+          clickHandler({
+            idx,
+            apiName,
+            apiResultsField: resultsField,
+            apiContinueField: continueField,
+          });
         }}
         href="#"
       >
