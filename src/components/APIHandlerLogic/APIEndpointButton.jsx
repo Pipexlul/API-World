@@ -7,7 +7,7 @@ const APIEndpointButton = ({
   endpointURL,
   setEndpointURL,
 }) => {
-  const { canClick } = useContext(APIHandlerContext);
+  const { canClick, isLoading } = useContext(APIHandlerContext);
 
   return (
     <a
@@ -19,7 +19,7 @@ const APIEndpointButton = ({
         }
       }}
       className={`group relative inline-block overflow-hidden rounded-full border-2 px-8 py-3 ${
-        canClick
+        canClick && !isLoading
           ? "cursor-pointer border-fuchsia-600"
           : "cursor-not-allowed border-gray-500"
       }`}
@@ -27,14 +27,16 @@ const APIEndpointButton = ({
     >
       <span
         className={`absolute inset-y-0 left-0 w-0 transition-all ${
-          canClick
+          canClick && !isLoading
             ? "bg-fuchsia-600 group-hover:w-full group-active:bg-fuchsia-500"
             : "w-0 bg-gray-500 group-active:bg-gray-600"
         }`}
       ></span>
       <span
         className={`text-md relative font-medium transition-colors ${
-          canClick ? "text-fuchsia-600 group-hover:text-white" : "text-gray-500"
+          canClick && !isLoading
+            ? "text-fuchsia-600 group-hover:text-white"
+            : "text-gray-500"
         }`}
       >
         {label}

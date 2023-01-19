@@ -48,7 +48,7 @@ const filterInputsReducer = (state, action) => {
   }
 };
 
-const APIHandler = ({ mainData, apiData }) => {
+const APIHandler = ({ apiData }) => {
   const [limitedResults, setLimitedResults] = useState(0);
   const [selectedAPI, setSelectedAPI] = useState({
     idx: -1,
@@ -67,10 +67,6 @@ const APIHandler = ({ mainData, apiData }) => {
     filterInputsReducer,
     []
   );
-
-  useEffect(() => {
-    setSort(null);
-  }, [apiData]);
 
   useEffect(() => {
     if (selectedAPI.idx !== -1) {
@@ -157,7 +153,6 @@ const APIHandler = ({ mainData, apiData }) => {
           Selecciona una API
         </h2>
         <APIChooser
-          mainData={Object.values(mainData)}
           apiData={apiData}
           selectedAPI={selectedAPI}
           setSelectedAPI={setSelectedAPI}

@@ -16,7 +16,7 @@ const APIChooserButton = ({
         onClick={(e) => {
           e.preventDefault();
 
-          const { resultsField, continueField } = apiData[apiName];
+          const { resultsField, continueField } = apiData;
           clickHandler({
             idx,
             apiName,

@@ -61,6 +61,13 @@ const appReducer = (state, action) => {
   return state;
 };
 
+const dataSorter = (property, a, b) => {
+  const aData = a[1];
+  const bData = b[1];
+
+  return aData[property].localeCompare(bData[property]);
+};
+
 function App() {
   const [loadedData, setLoadedData] = useState("NULL");
   const [apiState, apiDispatch] = useReducer(appReducer, {});
@@ -79,93 +86,100 @@ function App() {
 
     const mainValues = Object.values(initialData.main);
 
-    Object.entries(featureData).forEach(([key, value]) => {
-      const fileName = key
-        .replace("./data/FeatureList/", "")
-        .replace(".js", "");
+    Object.entries(featureData)
+      .sort((a, b) => {
+        return dataSorter("title", a, b);
+      })
+      .forEach(([key, value]) => {
+        const fileName = key
+          .replace("./data/FeatureList/", "")
+          .replace(".js", "");
 
-      const mainBlock = mainValues.find((item) => item.internal === fileName);
-      if (mainBlock) {
-        initialData.features.push(value);
-      }
-    });
-
-    Object.entries(individualApiData).forEach(([key, value]) => {
-      const fileName = key.replace("./data/APIData/", "").replace(".js", "");
-
-      const mainBlock = mainValues.find((item) => item.internal === fileName);
-
-      if (mainBlock) {
-        const finalApiValues = [];
-
-        const finalApiData = {
-          resultsField: value.resultsField,
-          continueField: value.continueField,
-          apiValues: finalApiValues,
-        };
-
-        if (!initialData.apidata[value.apiName]) {
-          initialData.apidata[value.apiName] = finalApiData;
+        const mainBlock = mainValues.find((item) => item.internal === fileName);
+        if (mainBlock) {
+          initialData.features.push(value);
         }
-
-        if (!initialData.apidata[fileName]) {
-          initialData.apidata[fileName] = finalApiData;
-        }
-
-        value.endpoints.forEach((item) => {
-          if (item.enabled) {
-            finalApiValues.push(item);
-          }
-        });
-      }
-    });
-
-    Object.entries(howToUseData).forEach(([key, value]) => {
-      const fileName = key.replace("./data/HowToUse/", "").replace(".js", "");
-
-      const mainBlock = mainValues.find((item) => item.internal === fileName);
-
-      if (fileName === "General") {
-        initialData.howtouse.push(value);
-      } else if (
-        mainBlock &&
-        initialData.apidata[fileName].apiValues.length > 0
-      ) {
-        const dataCopy = structuredClone(value);
-
-        initialData.apidata[fileName].apiValues.forEach((item) => {
-          if (item.enabled) {
-            const fieldsObjects = item.fields.map((field) => {
-              return {
-                main: field.name,
-                hint: field.desc,
-              };
-            });
-
-            dataCopy.subSections.push({
-              title: item.name,
-              helperTexts: fieldsObjects,
-            });
-          }
-        });
-
-        initialData.howtouse.push(dataCopy);
-      }
-    });
-
-    if (initialData.howtouse.length > 0) {
-      initialData.howtouse.sort((a, b) => {
-        if (a.sectionName === "General") {
-          return -1;
-        }
-
-        if (b.sectionName === "General") {
-          return 1;
-        }
-
-        return a.sectionName.localeCompare(b.sectionName);
       });
-    }
+
+    Object.entries(individualApiData)
+      .sort((a, b) => {
+        return dataSorter("apiName", a, b);
+      })
+      .forEach(([key, value]) => {
+        const fileName = key.replace("./data/APIData/", "").replace(".js", "");
+
+        const mainBlock = mainValues.find((item) => item.internal === fileName);
+
+        if (mainBlock) {
+          const finalApiValues = [];
+
+          const finalApiData = {
+            resultsField: value.resultsField,
+            continueField: value.continueField,
+            apiValues: finalApiValues,
+            apiName: value.apiName,
+          };
+
+          if (!initialData.apidata[value.apiName]) {
+            initialData.apidata[value.apiName] = finalApiData;
+          }
+
+          // if (!initialData.apidata[fileName]) {
+          //   initialData.apidata[fileName] = finalApiData;
+          // }
+
+          value.endpoints.forEach((item) => {
+            if (item.enabled) {
+              finalApiValues.push(item);
+            }
+          });
+        }
+      });
+
+    Object.entries(howToUseData)
+      .sort((a, b) => {
+        const key = "sectionName";
+
+        if (a[1][key] === "General") {
+          return -1;
+        } else if (b[1][key] === "General") {
+          return 1;
+        } else {
+          return dataSorter(key, a, b);
+        }
+      })
+      .forEach(([key, value]) => {
+        const fileName = key.replace("./data/HowToUse/", "").replace(".js", "");
+
+        const mainBlock = mainValues.find((item) => item.internal === fileName);
+
+        if (fileName === "General") {
+          initialData.howtouse.push(value);
+        } else if (
+          mainBlock &&
+          initialData.apidata[mainBlock.name].apiValues.length > 0
+        ) {
+          const dataCopy = structuredClone(value);
+
+          initialData.apidata[mainBlock.name].apiValues.forEach((item) => {
+            if (item.enabled) {
+              const fieldsObjects = item.fields.map((field) => {
+                return {
+                  main: field.name,
+                  hint: field.desc,
+                };
+              });
+
+              dataCopy.subSections.push({
+                title: item.name,
+                helperTexts: fieldsObjects,
+              });
+            }
+          });
+
+          initialData.howtouse.push(dataCopy);
+        }
+      });
 
     apiDispatch({ type: "INIT_SET", payload: initialData });
     setLoadedData("INITIAL_SETUP");
@@ -184,7 +198,7 @@ function App() {
         <Header />
         <FeaturesList features={apiState.features} />
         <HowToUse howToUseData={apiState.howtouse} />
-        <APIHandler mainData={apiState.main} apiData={apiState.apidata} />
+        <APIHandler apiData={apiState.apidata} />
       </div>
     </APIContext.Provider>
   ) : null;
