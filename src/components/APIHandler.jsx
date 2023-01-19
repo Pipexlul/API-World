@@ -31,8 +31,10 @@ const filterInputsReducer = (state, action) => {
     }
 
     case "RESET_INPUTS": {
-      const newState = structuredClone(state);
-      newState.forEach((input) => (input.value = ""));
+      const newState = [];
+      for (const inputData of state) {
+        newState.push({ fieldName: inputData.fieldName, value: "" });
+      }
 
       return newState;
     }

@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { APIHandlerContext } from "../../../contexts/appContexts";
+import CleanFiltersButton from "../../Buttons/CleanFiltersButton";
 import APIFilterInput from "./APIFilterInput";
 
 const APIFilters = ({ headers }) => {
@@ -20,12 +21,9 @@ const APIFilters = ({ headers }) => {
         ))}
 
         <div className="flex flex-col gap-4 sm:flex-row">
-          <button className="rounded bg-blue-700 px-4 py-2 font-semibold hover:bg-gradient-to-br hover:from-blue-700 hover:to-blue-500">
-            Filtrar
-          </button>
-          <button className="rounded bg-red-700 px-4 py-2 font-semibold hover:bg-gradient-to-bl hover:from-red-700 hover:to-red-500">
-            Limpiar Filtros
-          </button>
+          <CleanFiltersButton
+            action={() => dispatchFilterInputs({ type: "RESET_INPUTS" })}
+          />
         </div>
       </div>
     </div>

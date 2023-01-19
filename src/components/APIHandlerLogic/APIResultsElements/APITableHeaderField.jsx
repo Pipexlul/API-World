@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { APIHandlerContext } from "../../../contexts/appContexts";
 
 const defaultSorter = {
@@ -17,7 +17,11 @@ const defaultSorter = {
 const APITableHeaderField = ({ headerFieldData }) => {
   const [sortAscending, setSortAscending] = useState(true);
 
-  const { setSort } = useContext(APIHandlerContext);
+  const { setSort, endpointURL } = useContext(APIHandlerContext);
+
+  useEffect(() => {
+    setSortAscending(true);
+  }, [endpointURL]);
 
   return (
     <th className="whitespace-nowrap px-4 py-2 text-left font-medium">
