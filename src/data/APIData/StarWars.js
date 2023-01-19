@@ -39,7 +39,20 @@ export const data = {
           name: "Fecha de estreno",
           desc: "Fecha de estreno de la pelicula en formato Año/Mes/Dia",
           sortable: true,
-          customSort: null,
+          customSort: {
+            ascending: (a, b) => {
+              const aDate = new Date(a);
+              const bDate = new Date(b);
+
+              return aDate - bDate;
+            },
+            descending: (a, b) => {
+              const aDate = new Date(a);
+              const bDate = new Date(b);
+
+              return bDate - aDate;
+            },
+          },
           jsonTag: "release_date",
         },
       ],

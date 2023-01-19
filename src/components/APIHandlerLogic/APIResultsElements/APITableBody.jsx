@@ -3,7 +3,8 @@ import { APIHandlerContext } from "../../../contexts/appContexts";
 import APITableBodyEntry from "./APITableBodyEntry";
 
 const APITableBody = ({ headers, results }) => {
-  const { sort, limitedResults, filterInputs } = useContext(APIHandlerContext);
+  const { sort, limitedResults, filterInputs, isLoading } =
+    useContext(APIHandlerContext);
 
   const sortResults = (results) => {
     const numLimit = Number(limitedResults);
@@ -57,7 +58,8 @@ const APITableBody = ({ headers, results }) => {
 
   return (
     <tbody className="divide-y divide-gray-200 text-white">
-      {results &&
+      {!isLoading &&
+        results &&
         sortResults(filterResults(results)).map((result, idx) => (
           <APITableBodyEntry key={idx} headers={headers} entry={result} />
         ))}

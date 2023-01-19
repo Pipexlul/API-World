@@ -61,6 +61,7 @@ const APIHandler = ({ mainData, apiData }) => {
   const [endpointURL, setEndpointURL] = useState("");
   const [results, setResults] = useState(null);
   const [sort, setSort] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [filterInputs, dispatchFilterInputs] = useReducer(
     filterInputsReducer,
@@ -92,10 +93,10 @@ const APIHandler = ({ mainData, apiData }) => {
   }, [canClick]);
 
   useEffect(() => {
-    setSort(null);
-    setResults(null);
-
     if (endpointURL) {
+      setSort(null);
+      setResults(null);
+      setIsLoading(true);
       console.log(endpoints);
       dispatchFilterInputs({
         type: "CREATE_ALL",
@@ -137,7 +138,10 @@ const APIHandler = ({ mainData, apiData }) => {
         return finalResults;
       };
 
-      fetchResults(urlCopy).then(setResults).catch(console.error);
+      fetchResults(urlCopy)
+        .then(setResults)
+        .catch(console.error)
+        .finally(() => setIsLoading(false));
     }
   }, [endpointURL]);
 
@@ -180,6 +184,7 @@ const APIHandler = ({ mainData, apiData }) => {
           endpointURL,
           filterInputs,
           dispatchFilterInputs,
+          isLoading,
         }}
       >
         <APIEndpoints
