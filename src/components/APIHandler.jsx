@@ -20,6 +20,11 @@ const APIHandler = ({ mainData, apiData }) => {
   const [endpoints, setEndpoints] = useState([]);
   const [endpointURL, setEndpointURL] = useState("");
   const [results, setResults] = useState(null);
+  const [sort, setSort] = useState(null);
+
+  useEffect(() => {
+    setSort(null);
+  }, [apiData]);
 
   useEffect(() => {
     if (selectedAPI.idx !== -1) {
@@ -111,14 +116,20 @@ const APIHandler = ({ mainData, apiData }) => {
         toColor="to-emerald-500/0"
       />
 
-      <APIHandlerContext.Provider value={{ canClick }}>
+      <APIHandlerContext.Provider value={{ canClick, sort, setSort }}>
         <APIEndpoints
           endpointData={endpoints}
           setCanClick={setCanClick}
           setEndpointURL={setEndpointURL}
         />
 
-        <APIResults results={results} />
+        <APIResults
+          results={results}
+          headers={
+            endpoints.find((endpoint) => endpoint.endpoint === endpointURL)
+              ?.fields
+          }
+        />
       </APIHandlerContext.Provider>
     </section>
   );

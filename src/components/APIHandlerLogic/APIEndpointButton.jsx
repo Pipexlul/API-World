@@ -18,7 +18,6 @@ const APIEndpointButton = ({
           setEndpointURL(endpointURL);
         }
       }}
-      disabled={!canClick}
       className={`group relative inline-block overflow-hidden rounded-full border-2 px-8 py-3 ${
         canClick
           ? "cursor-pointer border-fuchsia-600"
