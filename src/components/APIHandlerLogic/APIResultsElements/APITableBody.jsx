@@ -3,7 +3,7 @@ import { APIHandlerContext } from "../../../contexts/appContexts";
 import APITableBodyEntry from "./APITableBodyEntry";
 
 const APITableBody = ({ headers, results }) => {
-  const { sort, limitedResults } = useContext(APIHandlerContext);
+  const { sort, limitedResults, filterInputs } = useContext(APIHandlerContext);
 
   const sortResults = (results) => {
     const numLimit = Number(limitedResults);
@@ -35,10 +35,30 @@ const APITableBody = ({ headers, results }) => {
     return results;
   };
 
+  const filterResults = (results) => {
+    if (filterInputs) {
+      const filterData = filterInputs.filter((filterObj) => {
+        return filterObj.value.trim() !== "";
+      });
+
+      const resultsCopy = structuredClone(results);
+
+      return resultsCopy.filter((result) => {
+        return filterData.every((filterObj) => {
+          return result[filterObj.fieldName]
+            .toLowerCase()
+            .includes(filterObj.value.toLowerCase());
+        });
+      });
+    }
+
+    return results;
+  };
+
   return (
     <tbody className="divide-y divide-gray-200 text-white">
       {results &&
-        sortResults(results).map((result, idx) => (
+        sortResults(filterResults(results)).map((result, idx) => (
           <APITableBodyEntry key={idx} headers={headers} entry={result} />
         ))}
     </tbody>

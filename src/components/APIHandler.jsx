@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 
 import { APIHandlerContext } from "../contexts/appContexts";
 
@@ -7,6 +7,44 @@ import APIEndpoints from "./APIHandlerLogic/APIEndpoints";
 import APIGeneralFilters from "./APIHandlerLogic/APIGeneralFilters";
 import APIResults from "./APIHandlerLogic/APIResults";
 import Separator from "./Separator";
+
+const filterInputsReducer = (state, action) => {
+  switch (action.type) {
+    case "CREATE_ALL": {
+      const newState = [];
+
+      for (let i = 0; i < action.payload.length; i++) {
+        newState.push({
+          fieldName: action.payload[i].jsonTag,
+          value: "",
+        });
+      }
+
+      return newState;
+    }
+
+    case "SET_INPUT": {
+      const newState = structuredClone(state);
+      newState[action.payload.idx].value = action.payload.value;
+
+      return newState;
+    }
+
+    case "RESET_INPUTS": {
+      const newState = structuredClone(state);
+      newState.forEach((input) => (input.value = ""));
+
+      return newState;
+    }
+
+    case "FULL_WIPE": {
+      return [];
+    }
+
+    default:
+      return state;
+  }
+};
 
 const APIHandler = ({ mainData, apiData }) => {
   const [limitedResults, setLimitedResults] = useState(0);
@@ -21,6 +59,11 @@ const APIHandler = ({ mainData, apiData }) => {
   const [endpointURL, setEndpointURL] = useState("");
   const [results, setResults] = useState(null);
   const [sort, setSort] = useState(null);
+
+  const [filterInputs, dispatchFilterInputs] = useReducer(
+    filterInputsReducer,
+    []
+  );
 
   useEffect(() => {
     setSort(null);
@@ -51,6 +94,13 @@ const APIHandler = ({ mainData, apiData }) => {
     setResults(null);
 
     if (endpointURL) {
+      console.log(endpoints);
+      dispatchFilterInputs({
+        type: "CREATE_ALL",
+        payload: endpoints.find((endpoint) => endpoint.endpoint === endpointURL)
+          .fields,
+      });
+
       const urlCopy = endpointURL;
 
       const fetchResults = async (url) => {
@@ -120,7 +170,15 @@ const APIHandler = ({ mainData, apiData }) => {
       />
 
       <APIHandlerContext.Provider
-        value={{ canClick, sort, setSort, limitedResults }}
+        value={{
+          canClick,
+          sort,
+          setSort,
+          limitedResults,
+          endpointURL,
+          filterInputs,
+          dispatchFilterInputs,
+        }}
       >
         <APIEndpoints
           endpointData={endpoints}
