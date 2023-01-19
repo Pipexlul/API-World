@@ -116,7 +116,9 @@ const APIHandler = ({ mainData, apiData }) => {
         toColor="to-emerald-500/0"
       />
 
-      <APIHandlerContext.Provider value={{ canClick, sort, setSort }}>
+      <APIHandlerContext.Provider
+        value={{ canClick, sort, setSort, limitedResults }}
+      >
         <APIEndpoints
           endpointData={endpoints}
           setCanClick={setCanClick}
