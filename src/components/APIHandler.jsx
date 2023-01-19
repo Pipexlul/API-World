@@ -47,6 +47,9 @@ const APIHandler = ({ mainData, apiData }) => {
   }, [canClick]);
 
   useEffect(() => {
+    setSort(null);
+    setResults(null);
+
     if (endpointURL) {
       const urlCopy = endpointURL;
 
