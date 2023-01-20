@@ -26,6 +26,10 @@ export const data = {
           hint: "Los campos vacios no se tienen en cuenta",
         },
         {
+          main: "No todos los campos son filtrables por el momento",
+          hint: "Aquellos que no lo sean, estarán siempre en gris",
+        },
+        {
           main: "Un filtro intenta buscar en su campo correspondiente algun resultado que contenga el texto del filtro",
           hint: "No te preocupes por mayusculas o minusculas, se ignoran",
         },

@@ -62,11 +62,126 @@ const APIHandler = ({ apiData }) => {
   const [results, setResults] = useState(null);
   const [sort, setSort] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  // const [retrigger, setRetrigger] = useState("");
 
   const [filterInputs, dispatchFilterInputs] = useReducer(
     filterInputsReducer,
     []
   );
+
+  const getResults = (urlParam) => {
+    const realEndpointURL = urlParam;
+
+    const endpointData = endpoints.find(
+      (endpoint) => endpoint.endpoint === realEndpointURL
+    );
+
+    if (!endpointData) {
+      return;
+    }
+
+    setSort(null);
+    setResults(null);
+    setIsLoading(true);
+    console.log(endpoints);
+    dispatchFilterInputs({
+      type: "CREATE_ALL",
+      payload: endpointData.fields,
+    });
+
+    const fetchResults = async (url) => {
+      let finalResults = [];
+      const randomData = {
+        max: -1,
+        usedIndexes: [],
+      };
+
+      while (url) {
+        console.log("Fetching", url);
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(
+              `HTTP error! status: ${response.status} when fetching ${url}`
+            );
+          }
+          const data = await response.json();
+          console.log(data);
+
+          if (endpointData.isRandom) {
+            if (randomData.max === -1) {
+              randomData.max = data[endpointData.randomField];
+
+              if (!randomData.max) {
+                throw new Error(
+                  `The random field ${endpointData.randomField} is not a number or does not exist`
+                );
+              }
+            }
+
+            const response = await fetch(
+              realEndpointURL + endpointData.randomQuery + randomData.max
+            );
+            if (!response.ok) {
+              throw new Error(
+                `HTTP error! status: ${response.status} when fetching ${url}`
+              );
+            }
+
+            let allElements = await response.json();
+            allElements = allElements[selectedAPI.apiResultsField];
+
+            while (
+              randomData.usedIndexes.length <
+              Math.min(endpointData.randomEntries, randomData.max)
+            ) {
+              let randomIndex = Math.floor(Math.random() * randomData.max);
+
+              while (randomData.usedIndexes.includes(randomIndex)) {
+                randomIndex = Math.floor(Math.random() * randomData.max);
+              }
+
+              const response = await fetch(allElements[randomIndex].url);
+              if (!response.ok) {
+                throw new Error(
+                  `HTTP error! status: ${response.status} when fetching ${url}`
+                );
+              }
+
+              const data = await response.json();
+              console.log(data);
+
+              finalResults = finalResults.concat(data);
+              randomData.usedIndexes.push(randomIndex);
+            }
+
+            url = null;
+          } else {
+            finalResults = finalResults.concat(
+              data[selectedAPI.apiResultsField]
+            );
+
+            if (selectedAPI.apiContinueField) {
+              url = data[selectedAPI.apiContinueField];
+            } else {
+              url = null;
+            }
+          }
+        } catch (error) {
+          throw error;
+        }
+      }
+
+      return finalResults;
+    };
+
+    fetchResults(realEndpointURL)
+      .then(setResults)
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   useEffect(() => {
     if (selectedAPI.idx !== -1) {
@@ -87,59 +202,6 @@ const APIHandler = ({ apiData }) => {
       return () => clearTimeout(timer);
     }
   }, [canClick]);
-
-  useEffect(() => {
-    if (endpointURL) {
-      setSort(null);
-      setResults(null);
-      setIsLoading(true);
-      console.log(endpoints);
-      dispatchFilterInputs({
-        type: "CREATE_ALL",
-        payload: endpoints.find((endpoint) => endpoint.endpoint === endpointURL)
-          .fields,
-      });
-
-      const urlCopy = endpointURL;
-
-      const fetchResults = async (url) => {
-        let finalResults = [];
-
-        while (url) {
-          console.log("Fetching", url);
-          try {
-            const response = await fetch(url);
-            if (!response.ok) {
-              throw new Error(
-                `HTTP error! status: ${response.status} when fetching ${url}`
-              );
-            }
-            const data = await response.json();
-            console.log(data);
-
-            finalResults = finalResults.concat(
-              data[selectedAPI.apiResultsField]
-            );
-
-            if (selectedAPI.apiContinueField) {
-              url = data[selectedAPI.apiContinueField];
-            } else {
-              url = null;
-            }
-          } catch (error) {
-            throw error;
-          }
-        }
-
-        return finalResults;
-      };
-
-      fetchResults(urlCopy)
-        .then(setResults)
-        .catch(console.error)
-        .finally(() => setIsLoading(false));
-    }
-  }, [endpointURL]);
 
   useEffect(() => {
     console.log("Results changed");
@@ -176,17 +238,15 @@ const APIHandler = ({ apiData }) => {
           sort,
           setSort,
           limitedResults,
-          endpointURL,
           filterInputs,
           dispatchFilterInputs,
           isLoading,
+          getResults,
+          endpointURL,
+          setEndpointURL,
         }}
       >
-        <APIEndpoints
-          endpointData={endpoints}
-          setCanClick={setCanClick}
-          setEndpointURL={setEndpointURL}
-        />
+        <APIEndpoints endpointData={endpoints} setCanClick={setCanClick} />
 
         <APIResults
           results={results}

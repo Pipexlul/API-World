@@ -17,6 +17,7 @@ const APIFilters = ({ headers }) => {
             idx={idx}
             dispatch={dispatchFilterInputs}
             filterInputs={filterInputs}
+            blockFilter={header.blockFilter}
           />
         ))}
 

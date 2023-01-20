@@ -46,7 +46,25 @@ const APITableBody = ({ headers, results }) => {
 
       return resultsCopy.filter((result) => {
         return filterData.every((filterObj) => {
-          return result[filterObj.fieldName]
+          let valueToCheck = result[filterObj.fieldName];
+
+          if (typeof valueToCheck === "undefined" || valueToCheck === null) {
+            return false;
+          }
+
+          if (typeof valueToCheck === "object") {
+            return false; // TODO: Add support for filtering objects and arrays
+          }
+
+          if (typeof valueToCheck === "number") {
+            valueToCheck = valueToCheck.toString();
+          }
+
+          if (typeof valueToCheck === "boolean") {
+            valueToCheck = valueToCheck ? "true" : "false";
+          }
+
+          return valueToCheck
             .toLowerCase()
             .includes(filterObj.value.toLowerCase());
         });

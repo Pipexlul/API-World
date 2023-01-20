@@ -12,6 +12,6 @@ export const apiData = {
   rickAndMorty: {
     name: "Rick and Morty",
     internal: "RickAndMorty",
-    enabled: true,
+    enabled: false,
   },
 };

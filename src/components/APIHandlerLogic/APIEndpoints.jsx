@@ -1,6 +1,6 @@
 import APIEndpointButton from "./APIEndpointButton";
 
-const APIEndpoints = ({ endpointData, setCanClick, setEndpointURL }) => {
+const APIEndpoints = ({ endpointData, setCanClick }) => {
   return (
     <div className="mb-4 flex flex-wrap place-content-center justify-evenly gap-y-2 p-6">
       {endpointData.length > 0 &&
@@ -11,7 +11,6 @@ const APIEndpoints = ({ endpointData, setCanClick, setEndpointURL }) => {
               label={endpoint.name}
               endpointURL={endpoint.endpoint}
               setCanClick={setCanClick}
-              setEndpointURL={setEndpointURL}
             />
           );
         })}

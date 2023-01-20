@@ -109,7 +109,7 @@ export const data = {
                 const aYear = Number(a.replace("BBY", ""));
                 const bYear = Number(b.replace("BBY", ""));
 
-                return aYear - bYear;
+                return bYear - aYear;
               }
             },
             descending: (a, b) => {
@@ -121,7 +121,7 @@ export const data = {
                 const aYear = Number(a.replace("BBY", ""));
                 const bYear = Number(b.replace("BBY", ""));
 
-                return bYear - aYear;
+                return aYear - bYear;
               }
             },
           },
@@ -223,25 +223,665 @@ export const data = {
     {
       name: "Planetas",
       endpoint: "https://swapi.dev/api/planets/",
-      fields: [],
+      fields: [
+        {
+          name: "Nombre",
+          desc: "Nombre del planeta",
+          sortable: true,
+          customSort: null,
+          jsonTag: "name",
+        },
+        {
+          name: "Poblacion",
+          desc: "Poblacion del planeta de seres sintientes",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                const aPopulation = Number(a);
+                const bPopulation = Number(b);
+
+                return aPopulation - bPopulation;
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                const aPopulation = Number(a);
+                const bPopulation = Number(b);
+
+                return bPopulation - aPopulation;
+              }
+            },
+          },
+          jsonTag: "population",
+        },
+        {
+          name: "Diametro (km)",
+          desc: "Diametro del planeta en kilometros",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                const aDiameter = Number(a);
+                const bDiameter = Number(b);
+
+                return aDiameter - bDiameter;
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                const aDiameter = Number(a);
+                const bDiameter = Number(b);
+
+                return bDiameter - aDiameter;
+              }
+            },
+          },
+          jsonTag: "diameter",
+        },
+        {
+          name: "Clima",
+          desc: "Clima del planeta",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "climate",
+        },
+        {
+          name: "Terreno",
+          desc: "Terreno del planeta",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "terrain",
+        },
+        {
+          name: "Rotacion (horas)",
+          desc: "Tiempo de rotacion del planeta en horas",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                const aRotation = Number(a);
+                const bRotation = Number(b);
+
+                return aRotation - bRotation;
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                const aRotation = Number(a);
+                const bRotation = Number(b);
+
+                return bRotation - aRotation;
+              }
+            },
+          },
+          jsonTag: "rotation_period",
+        },
+      ],
       enabled: true,
     },
     {
       name: "Especies",
       endpoint: "https://swapi.dev/api/species/",
-      fields: [],
+      fields: [
+        {
+          name: "Nombre",
+          desc: "Nombre de la especie",
+          sortable: true,
+          customSort: null,
+          jsonTag: "name",
+        },
+        {
+          name: "Lenguaje",
+          desc: "Lenguaje más comun de la especie",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "language",
+        },
+        {
+          name: "Clasificacion",
+          desc: "Clasificacion de la especie",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "classification",
+        },
+        {
+          name: "Promedio de vida (años)",
+          desc: "Promedio de vida de la especie en años",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "indefinite") {
+                return 1;
+              } else if (b === "indefinite") {
+                return -1;
+              } else {
+                const aAverage = Number(a);
+                const bAverage = Number(b);
+
+                return aAverage - bAverage;
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "indefinite") {
+                return -1;
+              } else if (b === "indefinite") {
+                return 1;
+              } else {
+                const aAverage = Number(a);
+                const bAverage = Number(b);
+
+                return bAverage - aAverage;
+              }
+            },
+          },
+          jsonTag: "average_lifespan",
+        },
+      ],
       enabled: true,
     },
     {
       name: "Naves",
       endpoint: "https://swapi.dev/api/starships/",
-      fields: [],
+      fields: [
+        {
+          name: "Nombre",
+          desc: "Nombre de la nave",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              return a.localeCompare(b);
+            },
+            descending: (a, b) => {
+              return b.localeCompare(a);
+            },
+          },
+          jsonTag: "name",
+        },
+        {
+          name: "Modelo",
+          desc: "Modelo de la nave",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "model",
+        },
+        {
+          name: "Clase",
+          desc: "Tipo de la nave",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "starship_class",
+        },
+        {
+          name: "Fabricante",
+          desc: "Fabricante de la nave",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "manufacturer",
+        },
+        {
+          name: "Costo (creditos)",
+          desc: "Costo de la nave en creditos galacticos",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "n/a") {
+                return 1;
+              } else if (b === "n/a") {
+                return -1;
+              } else {
+                const aCost = Number(a);
+                const bCost = Number(b);
+
+                return aCost - bCost;
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "n/a") {
+                return -1;
+              } else if (b === "n/a") {
+                return 1;
+              } else {
+                const aCost = Number(a);
+                const bCost = Number(b);
+
+                return bCost - aCost;
+              }
+            },
+          },
+          jsonTag: "cost_in_credits",
+        },
+        {
+          name: "Tripulacion",
+          desc: "Cantidad de tripulacion de la nave (Gente escencial)",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "n/a") {
+                return 1;
+              } else if (b === "n/a") {
+                return -1;
+              } else {
+                const aHasRange = a.indexOf("-");
+                const bHasRange = b.indexOf("-");
+
+                const aCrew = Number(
+                  (aHasRange === -1 ? a : a.slice(0, aHasRange)).replace(
+                    ",",
+                    ""
+                  )
+                );
+                const bCrew = Number(
+                  (bHasRange === -1 ? b : b.slice(0, bHasRange)).replace(
+                    ",",
+                    ""
+                  )
+                );
+
+                return aCrew - bCrew;
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "n/a") {
+                return -1;
+              } else if (b === "n/a") {
+                return 1;
+              } else {
+                const aHasRange = a.indexOf("-");
+                const bHasRange = b.indexOf("-");
+
+                const aCrew = Number(
+                  (aHasRange === -1 ? a : a.slice(0, aHasRange)).replace(
+                    ",",
+                    ""
+                  )
+                );
+                const bCrew = Number(
+                  (bHasRange === -1 ? b : b.slice(0, bHasRange)).replace(
+                    ",",
+                    ""
+                  )
+                );
+
+                return bCrew - aCrew;
+              }
+            },
+          },
+          jsonTag: "crew",
+        },
+        {
+          name: "Pasajeros",
+          desc: "Cantidad de pasajeros de la nave (Gente no escencial)",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "n/a") {
+                return 1;
+              } else if (b === "n/a") {
+                return -1;
+              } else {
+                const aPassengers = Number(a.replace(",", ""));
+                const bPassengers = Number(b.replace(",", ""));
+
+                return aPassengers - bPassengers;
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "n/a") {
+                return -1;
+              } else if (b === "n/a") {
+                return 1;
+              } else {
+                const aPassengers = Number(a.replace(",", ""));
+                const bPassengers = Number(b.replace(",", ""));
+
+                return bPassengers - aPassengers;
+              }
+            },
+          },
+          jsonTag: "passengers",
+        },
+      ],
       enabled: true,
     },
     {
       name: "Vehiculos",
       endpoint: "https://swapi.dev/api/vehicles/",
-      fields: [],
+      fields: [
+        {
+          name: "Nombre",
+          desc: "Nombre del vehiculo",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "name",
+        },
+        {
+          name: "Modelo",
+          desc: "Modelo del vehiculo",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "model",
+        },
+        {
+          name: "Clase",
+          desc: "Clase del vehiculo",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "vehicle_class",
+        },
+        {
+          name: "Fabricante",
+          desc: "Fabricante del vehiculo",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return a.localeCompare(b);
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else {
+                return b.localeCompare(a);
+              }
+            },
+          },
+          jsonTag: "manufacturer",
+        },
+        {
+          name: "Costo (creditos)",
+          desc: "Costo del vehiculo en creditos galacticos",
+          sortable: true,
+          customSort: {
+            ascending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "n/a") {
+                return 1;
+              } else if (b === "n/a") {
+                return -1;
+              } else {
+                const aCost = Number(a.replace(",", ""));
+                const bCost = Number(b.replace(",", ""));
+
+                return aCost - bCost;
+              }
+            },
+            descending: (a, b) => {
+              if (a === "unknown") {
+                return 1;
+              } else if (b === "unknown") {
+                return -1;
+              } else if (a === "n/a") {
+                return -1;
+              } else if (b === "n/a") {
+                return 1;
+              } else {
+                const aCost = Number(a.replace(",", ""));
+                const bCost = Number(b.replace(",", ""));
+
+                return bCost - aCost;
+              }
+            },
+          },
+          jsonTag: "cost_in_credits",
+        },
+      ],
       enabled: true,
     },
   ],

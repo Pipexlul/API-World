@@ -1,13 +1,9 @@
 import { useContext } from "react";
 import { APIHandlerContext } from "../../contexts/appContexts";
 
-const APIEndpointButton = ({
-  label,
-  setCanClick,
-  endpointURL,
-  setEndpointURL,
-}) => {
-  const { canClick, isLoading } = useContext(APIHandlerContext);
+const APIEndpointButton = ({ label, setCanClick, endpointURL }) => {
+  const { canClick, isLoading, getResults, setEndpointURL } =
+    useContext(APIHandlerContext);
 
   return (
     <a
@@ -16,6 +12,7 @@ const APIEndpointButton = ({
         if (canClick) {
           setCanClick(false);
           setEndpointURL(endpointURL);
+          getResults(endpointURL);
         }
       }}
       className={`group relative inline-block overflow-hidden rounded-full border-2 px-8 py-3 ${
