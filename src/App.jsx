@@ -8,6 +8,7 @@ import APIHandler from "./components/APIHandler";
 import { APIContext } from "./contexts/appContexts";
 
 import { apiData } from "./data/main.js";
+import Footer from "./components/Footer";
 
 const featureData = import.meta.glob("./data/FeatureList/*.js", {
   eager: true,
@@ -194,11 +195,12 @@ function App() {
 
   return loadedData === "FULLY_LOADED" ? (
     <APIContext.Provider value={apiState}>
-      <div className="min-h-screen bg-gradient-to-br from-cyan-200 to-emerald-900 pb-6">
+      <div className="min-h-screen bg-gradient-to-br from-cyan-200 to-emerald-900">
         <Header />
         <FeaturesList features={apiState.features} />
         <HowToUse howToUseData={apiState.howtouse} />
         <APIHandler apiData={apiState.apidata} />
+        <Footer />
       </div>
     </APIContext.Provider>
   ) : null;
