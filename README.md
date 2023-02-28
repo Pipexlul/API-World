@@ -43,8 +43,8 @@ To connect to another API, follow these steps:
 
 Connect with me on LinkedIn and Twitter to maybe chat or suggest new ideas!
 
-- LinkedIn: `[Link](https://www.linkedin.com/in/felipe-guajardo-39233523a/)`
-- Twitter: `[Link](https://twitter.com/Pipexlul)`
+- LinkedIn: [Link](https://www.linkedin.com/in/felipe-guajardo-39233523a/)
+- Twitter: [Link](https://twitter.com/Pipexlul)
 
 Feel free to reach out if you have any questions or would like to work on something together!
 
